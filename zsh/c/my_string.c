@@ -1,5 +1,7 @@
 #include "../h/my_string.h"
 
+/* Split `str` by `delimeter` into `array`. Returns token count.
+   Removes trailing newline before splitting. */
 int my_split(char *str, const char *delimeter, char **array)
 {
     char *token;

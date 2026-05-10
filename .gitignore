@@ -1,0 +1,36 @@
+# Ignore compiled object files and executables
+*.o
+*.obj
+*.exe
+*.out
+a.out
+my_zsh
+
+# Build and binary directories
+/bin/
+/build/
+
+# Logs and temporary files
+*.log
+*~
+*.swp
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Core dumps
+core
+
+# Tags
+tags
+
+# Coverage
+coverage/
+
+# Ignore compiled test artifacts
+.pytest_cache/

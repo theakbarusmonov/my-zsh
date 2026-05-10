@@ -1,3 +1,4 @@
+/* Supportive utilities used by the shell (env, exec, helpers) */
 #ifndef MY_ZSH_H_SUPPORTIVE_FUNCTIONS_H_
 #define MY_ZSH_H_SUPPORTIVE_FUNCTIONS_H_
 

@@ -1,10 +1,12 @@
 #include "../h/supportive_functions.h"
 
+/* Zero out `buffer` of given `length` */
 void clear_buffer(char* buffer, size_t length)
 {
     memset(buffer, 0, length);
 }
 
+/* Free memory allocated for an array of strings */
 void deallocate_substring(char* substrings[])
 {
     for (int i = 0; substrings[i] != NULL; i++)
@@ -13,11 +15,13 @@ void deallocate_substring(char* substrings[])
     }
 }
 
+/* Write an error message to stderr (fd 2) */
 void error_message(char* message)
 {
     write(2, message, strlen(message));
 }
 
+/* Print each environment variable on a new line */
 void print_env(char** env)
 {
     for (int i = 0; env[i] != NULL; i++)
@@ -26,6 +30,7 @@ void print_env(char** env)
     }
 }
 
+/* Split environment assignment like KEY=VALUE into tokens */
 void formatting(char* substrings[])
 {
     int i = 1;
@@ -37,6 +42,7 @@ void formatting(char* substrings[])
     }
 }
 
+/* Build a path by joining `token` (path) and `command` with '/' */
 char* copy(char* token, char* command)
 {
     int length = (strlen(token) + strlen(command) + 2);
@@ -47,6 +53,7 @@ char* copy(char* token, char* command)
     return tmp;
 }
 
+/* Search PATH for executable `command`; set `*answer` to full path */
 int is_accessible(char* command, char** answer)
 {
     char* path = malloc(sizeof(char) * PATH_MAX);
@@ -70,6 +77,7 @@ int is_accessible(char* command, char** answer)
     return 0;
 }
 
+/* Fork and exec the command in `substrings` using `env` */
 int executor(char** substrings, char** env)
 {
     pid_t pid;

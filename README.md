@@ -1,48 +1,86 @@
-# Welcome to My Zsh
-***
+# My_zsh - simple Unix-like shell
 
-## Description
-    Zsh - tcsh - bash - sh are command interpreters. A command interpreter is run inside a terminal.
-    The program "zsh" is a UNIX command interpreter that runs (-bash ...)
-    that read commands from "stdin" and sends them to execution after correcting
-    their (keywords, identifiers, operands) by expected syntax and execute the 
-    command if everything is okay.
+A minimal command interpreter implemented in C for learning purposes.
 
-    Zsh:
-        ->
-        |  Read: Read the command from standard input.
-        |  Parse: Separate the command string into a program and arguments.
-        |  Execute: Run the parsed command.
-        |-- (repeat)
+## Overview
 
-    Some commands to use:
-        cd, echo, ls, which ...
-        env, pwd, setenv, unsetenv ...
+This project implements a small shell that reads lines from standard input,
+parses them into a command and arguments, and executes either built-in
+commands or external programs found in `PATH`.
 
-## Installation
-    To run this program use GNU (gcc) compilation or Makefile that i provided 
-        GNU:
-            $> gcc zsh/c/*.c zsh/h/*.h
-            $> a.out
-            [/home/docode/project]> Enter command
+Key built-ins: `cd`, `echo`, `env`, `setenv`, `unsetenv`, `exit`/`quit`.
 
-        Makefile:
-            $> make
-            $> my_zsh
-            [/home/docode/project]> Enter command
+## Build
 
-    Note: to remove binary file (my_zsh) of Makefile use command "make clean" ;-)
+Requirements: GCC and GNU Make (or build manually with `gcc`).
+
+Using Make (recommended, tested under WSL/Linux):
+
+```bash
+make
+./my_zsh
+```
+
+Manual compilation:
+
+```bash
+gcc -I zsh/h zsh/c/*.c -o my_zsh
+./my_zsh
+```
 
 ## Usage
-    This "Zsh" UNIX command interpreter work:
-        [/home/docode/project]>ls
-        Makefile  README.md  my_zsh  zsh
-        [/home/docode/project]>cd ..
-        [/home/docode]>pwd
-        /home/docode
-        [/home/docode]>
 
-### The Core Team
-Akbar Usmonov\
-<span><i>Made at <a href='https://qwasar.io'>Qwasar SV -- Software Engineering School</a></i></span>
-<span><img alt='Qwasar SV -- Software Engineering School's Logo' src='https://storage.googleapis.com/qwasar-public/qwasar-logo_50x50.png' width='20px' /></span>
+The shell displays a prompt with the current directory, e.g.:
+
+```
+[/path/to/dir]>
+```
+
+Type a command and press Enter. Example session:
+
+```
+[/home/user/project]> echo Hello
+Hello
+[/home/user/project]> pwd
+/home/user/project
+[/home/user/project]> cd ..
+[/home/user]> pwd
+/home/user
+[/home/user]> exit
+```
+
+## Built-in commands
+
+- `cd <dir>`: change working directory. `cd -` swaps to the previous directory.
+- `echo <text>`: print text; supports expanding environment variables when prefixed with `$` (e.g. `echo $HOME`).
+- `env`: print the current environment variables.
+- `setenv KEY=VALUE` (or `setenv KEY VALUE` in some cases): set an environment variable (note: implementation has known memory handling issues in some cases).
+- `unsetenv KEY`: remove an environment variable.
+- `exit` / `quit`: exit the shell.
+
+External commands (e.g. `ls`, `which`) are executed by searching `PATH`.
+
+## Notes and known issues
+
+- `setenv` handling can cause a memory error in some input forms (observed when parsing `setenv TEST=123`). Use with care.
+- This shell is intended for education and is not hardened for production use.
+
+## Examples
+
+Start the shell and run a few commands non-interactively (useful for quick tests):
+
+```bash
+# print working dir and exit
+printf "pwd\nexit\n" | ./my_zsh
+
+# set a var, list env, then exit (use with caution)
+printf "setenv TEST=123\nenv\nexit\n" | ./my_zsh
+```
+
+## License
+
+See the `LICENSE` file.
+
+## Author
+
+Akbar Usmonov

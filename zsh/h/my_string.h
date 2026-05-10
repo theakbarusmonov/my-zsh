@@ -1,3 +1,4 @@
+/* String helper: tokenization for shell input */
 #ifndef MY_ZSH_H_MY_STRING_H_
 #define MY_ZSH_H_MY_STRING_H_
 

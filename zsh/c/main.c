@@ -3,8 +3,10 @@
 #define MAX_BUFFER_SIZE 256
 #define MAX_SUBSTRINGS 100
 
+/* Stores the previous working directory for `cd -` support */
 static char* prev_dir = NULL;
 
+/* Print text or expand and print an environment variable */
 void my_echo(char** substrings, char** env)
 {
     if (substrings[1][0] == '$')
@@ -23,6 +25,7 @@ void my_echo(char** substrings, char** env)
     }
 }
 
+/* Save the current working directory in `prev_dir` */
 void save_previous_path()
 {
     char* buffer;
@@ -36,6 +39,7 @@ void save_previous_path()
     free(buffer);
 }
 
+/* Change the current working directory; handle '-' (previous dir) */
 void my_cd(char** substrings)
 {
     char* buff;
@@ -68,6 +72,8 @@ void my_cd(char** substrings)
     }
 }
 
+/* Dispatch built-in commands (cd, echo, env, setenv, unsetenv)
+    or forward to external executor */
 void redirect(char* substrings[], char** env)
 {
     if ((strcmp(substrings[0], "quit") == 0) ||
@@ -124,6 +130,7 @@ void redirect(char* substrings[], char** env)
     }
 }
 
+/* Read-eval loop: show prompt, read a line, split and execute */
 void promp(char* buffer, size_t length, char* substrings[], char** env)
 {
     while (1)
@@ -151,6 +158,7 @@ void promp(char* buffer, size_t length, char* substrings[], char** env)
     free(buffer);
 }
 
+/* Program entry: allocate buffers and start the prompt loop */
 int main(int argc, char** argv, char** env)
 {
     if (argc > 2 || !argv)
